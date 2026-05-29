@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jal - Sankalp  - Smart India Hackathon</title>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="landing-section" id="landingPage">
+        <div class="parallax-bg"></div>
+        <div class="landing-content">
+            <div class="glass-effect"></div>
+            <div class="content-inner">
+                <h1 data-translate="title">Jal - Sankalp</h1>
+                <p><span data-translate="subtitle">Rooftop Rainwater Harvesting Potential Calculator</span><br>
+                <span data-translate="hackathon">Smart India Hackathon 2025</span></p>
+                <button class="start-btn" onclick="startAssessment()" data-translate="startBtn">Start Assessment</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container" id="appContainer">
+        <div class="progress-bar">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-info">
+                <span id="stepText">Step 1 of 5</span>
+                <span id="progressPercent">20%</span>
+            </div>
+        </div>
+
+        <div class="step-card active" id="step1">
+                        <h2 class="step-title" data-translate="personalDetails">Personal Details</h2>
+            <p class="step-subtitle" data-translate="personalDetailsSubtitle">Let's start with your basic information</p>
+            
+            <div class="form-group">
+                <label class="form-label" data-translate="nameLabel">Your Name</label>
+                <input type="text" class="form-input" id="userName" data-translate="namePlaceholder" placeholder="Enter your full name">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-translate="languageLabel">Preferred Language</label>
+                <div class="button-group" id="languageButtons">
+                    <button class="btn-option active" data-value="en" onclick="switchLanguage('en')">English</button>
+                    <button class="btn-option" data-value="hi" onclick="switchLanguage('hi')">हिंदी</button>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <div></div>
+                <button class="btn btn-primary" onclick="nextStep()" id="step1Next" disabled data-translate="next">Next</button>
+            </div>
+        </div>
+
+        <div class="step-card" id="step2">
+    <h2 class="step-title" data-translate="locationDetails">Location Details</h2>
+    <p class="step-subtitle" data-translate="locationSubtitle">Select your state and district or enter pincode directly</p>
+
+    <!-- New dropdown selection method -->
+    <div class="form-group">
+        <label class="form-label" data-translate="locationMethodLabel">Location Selection Method</label>
+        <div class="button-group" id="locationMethodButtons">
+            <button class="btn-option active" data-value="dropdown" data-translate="stateDistrictBtn">State & District</button>
+            <button class="btn-option" data-value="pincode" data-translate="pincodeBtn">Pincode</button>
+            <button class="btn-option" data-value="gps" data-translate="gpsBtn">GPS Location</button>
+        </div>
+    </div>
+
+    <!-- Dropdown inputs (default visible) -->
+    <div id="dropdownInputs">
+        <div class="input-group">
+                        <div class="form-group">
+                <label class="form-label" data-translate="stateLabel">State</label>
+                <select class="form-input" id="stateSelect">
+                    <option value="">Select State</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-translate="districtLabel">District</label>
+                <select class="form-input" id="districtSelect" disabled>
+                    <option value="">Select District</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pincode input (initially hidden) -->
+    <div id="pincodeInputs" style="display: none;">
+        <div class="form-group">
+            <label class="form-label" data-translate="pincodeLabel">Enter Pincode</label>
+            <input type="text" class="form-input" id="pincode" data-translate="pincodePlaceholder" placeholder="e.g., 411001" maxlength="6">
+        </div>
+    </div>
+
+    <!-- GPS button (initially hidden) -->
+    <div id="gpsInputs" style="display: none;">
+        <div class="form-group">
+            <button class="btn btn-secondary" onclick="useGPS()" data-translate="useGpsBtn">Use GPS Location</button>
+        </div>
+    </div>
+
+    <!-- Auto-populated pincode display -->
+    <div id="selectedPincode" style="display: none;">
+        <div class="location-info">
+            <h4 style="margin-bottom: 1rem; color: #1e3c72;" data-translate="selectedPincodeTitle">Selected Pincode</h4>
+            <div class="info-item">
+                <span class="info-label" data-translate="pincodeText">Pincode:</span>
+                <span class="info-value" id="displayPincode">-</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="location-info" id="locationInfo" style="display: none;">
+        <h4 style="margin-bottom: 1rem; color: #1e3c72;" data-translate="locationDetailsTitle">Location Details</h4>
+        <div class="info-item">
+            <span class="info-label" data-translate="areaLabel">Area:</span>
+            <span class="info-value" id="locationArea">-</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label" data-translate="rainfallLabel">Annual Rainfall:</span>
+            <span class="info-value" id="locationRainfall">-</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label" data-translate="groundwaterLabel">Groundwater Level:</span>
+            <span class="info-value" id="groundwaterLevel">-</span>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="btn btn-secondary" onclick="prevStep()" data-translate="back">Back</button>
+        <button class="btn btn-primary" onclick="nextStep()" id="step2Next" disabled data-translate="next">Next</button>
+    </div>
+</div>
+
+        <div class="step-card" id="step3">
+            <h2 class="step-title" data-translate="roofInfo">Roof Information</h2>
+            <p class="step-subtitle" data-translate="roofSubtitle">Specify your roof type and area</p>
+
+            <div class="form-group">
+                <label class="form-label" data-translate="roofTypeLabel">Roof Type</label>
+                <div class="button-group" id="roofTypeButtons">
+                    <button class="btn-option" data-value="concrete" data-translate="roofTypes.concrete">Concrete (95%)</button>
+                    <button class="btn-option" data-value="metal" data-translate="roofTypes.metal">Metal Sheet (90%)</button>
+                    <button class="btn-option" data-value="clay" data-translate="roofTypes.clay">Clay Tiles (85%)</button>
+                    <button class="btn-option" data-value="tiles" data-translate="roofTypes.tiles">Ceramic Tiles (80%)</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-translate="measureAreaLabel">How would you like to measure roof area?</label>
+                <div class="button-group" id="areaMethodButtons">
+                    <button class="btn-option active" data-value="manual" data-translate="manualEntry">Manual Entry</button>
+                    <button class="btn-option" data-value="total" data-translate="totalArea">Total Area</button>
+                    <button class="btn-option" data-value="map" data-translate="drawMap">Draw on Map</button>
+                </div>
+            </div>
+
+            <div id="manualInputs">
+                <div class="input-group">
+                    <div class="form-group">
+                        <label class="form-label" data-translate="lengthLabel">Length (meters)</label>
+                        <input type="number" class="form-input" id="roofLength" placeholder="e.g., 10" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" data-translate="widthLabel">Width (meters)</label>
+                        <input type="number" class="form-input" id="roofWidth" placeholder="e.g., 8" step="0.1">
+                    </div>
+                </div>
+            </div>
+
+            <div id="totalAreaInput" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label" data-translate="totalAreaLabel">Total Roof Area (sq meters)</label>
+                    <input type="number" class="form-input" id="totalRoofArea" placeholder="e.g., 150" step="0.1">
+                </div>
+            </div>            <div id="mapInputs" style="display: none;">
+                <div class="map-instructions">
+                    <strong>Instructions:</strong> Use the map below to draw your roof area. Switch between map views, search for your location, and use the drawing tools to outline your roof.
+                </div>
+                <div class="map-container">
+                    <div class="map-layer-controls">
+                        <button class="layer-btn active" onclick="switchMapLayer('roadmap')" data-layer="roadmap">Street Map</button>
+                        <button class="layer-btn" onclick="switchMapLayer('satellite')" data-layer="satellite">Satellite</button>
+                        <button class="layer-btn" onclick="switchMapLayer('hybrid')" data-layer="hybrid">Hybrid</button>
+                        <button class="layer-btn" onclick="switchMapLayer('terrain')" data-layer="terrain">Terrain</button>
+                    </div>
+                    <div class="map-controls">
+                        <button class="map-btn" onclick="searchCurrentLocation()">My Location</button>
+                        <button class="map-btn" onclick="searchLocationByPincode()">Search Area</button>
+                        <button class="map-btn" onclick="clearDrawing()">Clear Drawing</button>
+                        <button class="map-btn" onclick="toggleDrawingMode()" id="drawToggleBtn">Start Drawing</button>
+                    </div>
+                    <div id="map"></div>
+                    <div class="area-display">
+                        Calculated Area: <span id="mapArea">0</span> sq meters
+                    </div>
+                </div>
+            </div>
+
+            <div class="location-info">
+                <div class="info-item">
+                    <span class="info-label">Current Roof Area:</span>
+                    <span class="info-value" id="currentArea">0 sq meters</span>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" id="step3Next" disabled>Next</button>
+            </div>
+        </div>
+
+        <div class="step-card" id="step4">
+            <h2 class="step-title" data-translate="additionalInfo">Additional Information</h2>
+            <p class="step-subtitle" data-translate="additionalSubtitle">Optional details for better assessment (recommended)</p>
+
+            <div class="form-group">
+                <label class="form-label" data-translate="familyMembersLabel">Number of Family Members</label>
+                <input type="number" class="form-input" id="familyMembers" data-translate="familyMembersPlaceholder" placeholder="e.g., 4" min="1">
+            </div>
+
+                        <div class="form-group">
+                <label class="form-label" data-translate="waterSourceLabel">Water Source</label>
+                <div class="button-group" id="waterSourceButtons">
+                    <button class="btn-option" data-value="borewell" data-translate="waterSources.borewell">Borewell</button>
+                    <button class="btn-option" data-value="municipal" data-translate="waterSources.municipal">Municipal Supply</button>
+                    <button class="btn-option" data-value="other" data-translate="waterSources.other">Other</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-translate="waterBillLabel">Monthly Water Bill (₹)</label>
+                <input type="number" class="form-input" id="waterBill" data-translate="waterBillPlaceholder" placeholder="e.g., 1500" min="0">
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button class="btn btn-primary" onclick="calculateResults()">Calculate Results</button>
+            </div>
+        </div>
+
+        <div class="step-card" id="step5">
+            <h2 class="step-title" data-translate="resultsTitle">Assessment Results</h2>
+            <p class="step-subtitle" data-translate="resultsSubtitle">Your rainwater harvesting potential and recommendations</p>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3 data-translate="projectSummary">Project Summary</h3>
+                    <div class="result-item">
+                        <span class="result-label">Name:</span>
+                        <span class="result-value" id="resultName">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Location:</span>
+                        <span class="result-value" id="resultLocation">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Roof Area:</span>
+                        <span class="result-value" id="resultArea">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Roof Type:</span>
+                        <span class="result-value" id="resultRoofType">-</span>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Harvest Potential</h3>
+                    <div class="result-item">
+                        <span class="result-label">Annual Potential:</span>
+                        <span class="result-value highlight-value" id="annualPotential">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Monsoon Potential:</span>
+                        <span class="result-value" id="monsoonPotential">-</span>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Recommended Structure</h3>
+                    <div class="result-item">
+                        <span class="result-label">Structure Type:</span>
+                        <span class="result-value" id="structureType">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Capacity:</span>
+                        <span class="result-value" id="structureCapacity">-</span>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Cost Estimation</h3>
+                    <div class="result-item">
+                        <span class="result-label">Setup Cost:</span>
+                        <span class="result-value highlight-value" id="setupCost">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Payback Period:</span>
+                        <span class="result-value" id="paybackPeriod">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Annual Savings:</span>
+                        <span class="result-value" id="annualSavings">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Collection Pattern Chart -->
+            <div class="chart-container">
+                <h3 class="chart-title" data-translate="monthlyCollection">Monthly Collection Pattern</h3>
+                <div class="bar-chart" id="monthlyChart">
+                    <div class="bar-group">
+                        <div class="bar" id="janFebBar">
+                            <div class="bar-value" id="janFebValue">5L</div>
+                        </div>
+                        <div class="bar-label">Jan-Feb</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" id="marMayBar">
+                            <div class="bar-value" id="marMayValue">16L</div>
+                        </div>
+                        <div class="bar-label">Mar-May</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" id="junSepBar">
+                            <div class="bar-value" id="junSepValue">94L</div>
+                        </div>
+                        <div class="bar-label">Jun-Sep</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" id="octDecBar">
+                            <div class="bar-value" id="octDecValue">16L</div>
+                        </div>
+                        <div class="bar-label">Oct-Dec</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feasibility Assessment -->
+            <div class="feasibility-assessment">
+                <div class="feasibility-header">
+                    <h3 class="feasibility-title">Feasibility Assessment</h3>
+                    <span class="overall-score" id="overallScore">80/100</span>
+                </div>
+                
+                <div class="score-bar">
+                    <div class="score-fill" id="scoreFill"></div>
+                </div>
+                
+                <div class="recommendation-box">
+                    <div class="recommendation-text" id="recommendationText">
+                        Highly Recommended
+                    </div>
+                </div>
+                
+                <div class="assessment-details">
+                    <div class="assessment-item">
+                        <span>Estimated System Cost:</span>
+                        <span id="estimatedCost">₹45,000</span>
+                    </div>
+                    <div class="assessment-item">
+                        <span>Payback Period:</span>
+                        <span id="paybackDescription">Medium Term</span>
+                    </div>
+                </div>
+                
+                <p style="color: #666; margin: 1.5rem 0; font-style: italic;" id="feasibilityDescription">
+                    Excellent conditions for rainwater harvesting. High returns on investment expected.
+                </p>
+                
+                <div style="color: #1e3c72; font-weight: 600; margin-bottom: 1rem;">
+                    Assessment Factors:
+                </div>
+                
+                <div class="factors-list" id="assessmentFactors">
+                    <div class="factor-item" id="rainfallFactor">Moderate Rainfall: Good (30 points)</div>
+                    <div class="factor-item" id="roofAreaFactor">Medium Roof Area: Good (20 points)</div>
+                    <div class="factor-item" id="waterSourceFactor">Expensive Water Source: High Savings Potential (20 points)</div>
+                    <div class="factor-item" id="groundwaterFactor">Moderate Groundwater Depth: Good for RWH (10 points)</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-success" onclick="downloadReport()" data-translate="downloadReport">Download Report</button>
+                <button class="btn btn-primary" onclick="showFeedback()" data-translate="provideFeedback">Provide Feedback</button>
+                <button class="btn btn-secondary" onclick="startOver()" data-translate="startOver">Start Over</button>
+            </div>
+
+            <div class="feedback-section" id="feedbackSection" style="display: none;">
+                <h4 style="color: #856404; margin-bottom: 1rem;" data-translate="feedbackTitle">Rate Your Experience</h4>
+                <div class="rating-stars" id="ratingStars">
+                    <span class="star" data-rating="1">★</span>
+                    <span class="star" data-rating="2">★</span>
+                    <span class="star" data-rating="3">★</span>
+                    <span class="star" data-rating="4">★</span>
+                    <span class="star" data-rating="5">★</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Comments (Optional)</label>
+                    <textarea class="form-input" id="feedbackComments" rows="3" placeholder="Your feedback helps us improve..."></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="submitFeedback()">Submit Feedback</button>
+            </div>
+        </div>
+    </div>
+ <script src="translations.js"></script>
+ <script src="script.js"></script>
+ </body>
+
+</html>

@@ -1,0 +1,61 @@
+// Add these translations to the English section
+        'monthlyCollection': 'Monthly Collection Pattern',
+        'monthlyCollectionChart': {
+            'jan': 'January',
+            'feb': 'February',
+            'mar': 'March',
+            'apr': 'April',
+            'may': 'May',
+            'jun': 'June',
+            'jul': 'July',
+            'aug': 'August',
+            'sep': 'September',
+            'oct': 'October',
+            'nov': 'November',
+            'dec': 'December'
+        },
+        'resultLabels': {
+            'roofArea': 'Roof Area',
+            'annualRainfall': 'Annual Rainfall',
+            'collectionEfficiency': 'Collection Efficiency',
+            'potentialHarvest': 'Potential Harvest',
+            'costEstimate': 'Cost Estimate',
+            'maintenanceCost': 'Annual Maintenance',
+            'waterSavings': 'Annual Water Savings',
+            'returnPeriod': 'Return Period',
+            'feasibilityScore': 'Feasibility Score',
+            'environmentalImpact': 'Environmental Impact',
+            'storageRecommendation': 'Storage Recommendation',
+            'maintenanceSchedule': 'Maintenance Schedule'
+        },
+
+// Add these translations to the Hindi section
+        'monthlyCollection': 'मासिक संग्रह पैटर्न',
+        'monthlyCollectionChart': {
+            'jan': 'जनवरी',
+            'feb': 'फरवरी',
+            'mar': 'मार्च',
+            'apr': 'अप्रैल',
+            'may': 'मई',
+            'jun': 'जून',
+            'jul': 'जुलाई',
+            'aug': 'अगस्त',
+            'sep': 'सितंबर',
+            'oct': 'अक्टूबर',
+            'nov': 'नवंबर',
+            'dec': 'दिसंबर'
+        },
+        'resultLabels': {
+            'roofArea': 'छत का क्षेत्रफल',
+            'annualRainfall': 'वार्षिक वर्षा',
+            'collectionEfficiency': 'संग्रह दक्षता',
+            'potentialHarvest': 'संभावित संग्रह',
+            'costEstimate': 'लागत अनुमान',
+            'maintenanceCost': 'वार्षिक रखरखाव',
+            'waterSavings': 'वार्षिक जल बचत',
+            'returnPeriod': 'वापसी अवधि',
+            'feasibilityScore': 'व्यवहार्यता स्कोर',
+            'environmentalImpact': 'पर्यावरणीय प्रभाव',
+            'storageRecommendation': 'भंडारण की सिफारिश',
+            'maintenanceSchedule': 'रखरखाव अनुसूची'
+        },
