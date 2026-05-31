@@ -33,8 +33,8 @@ var currentStep = 1;
             document.getElementById('progressPercent').textContent = translations[currentLanguage]['progress'].replace('{n}', currentStep * 20);
         }
 
-        // Google Maps API Key - Replace with your actual API key
-        var GOOGLE_MAPS_API_KEY = 'AIzaSyB8hnaC2gCub-neWOXSQAuj6bttrXr0hVo';
+        // Google Maps API Key - Loaded dynamically from config.js
+        var GOOGLE_MAPS_API_KEY = (window.CONFIG && window.CONFIG.GOOGLE_MAPS_API_KEY) || '';
         var STATE_DISTRICT_PINCODE_DATA = {
     "Andhra Pradesh": {
         "Anantapur": ["515001", "515004", "515005", "515701"],
